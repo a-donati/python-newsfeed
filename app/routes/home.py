@@ -1,15 +1,15 @@
 from flask import Blueprint, render_template
-
+# # import Blueprint and render_template from flask
 bp = Blueprint('home', __name__, url_prefix='/')
-
+# # consolidate single routes to bp object
 @bp.route('/')
 def index():
-    return render_template('homepage.html')
+  return render_template('homepage.html')
 
 @bp.route('/login')
-def index():
-    return render_template('login.html')
+def login():
+  return render_template('login.html')
 
 @bp.route('/post/<id>')
-def index():
-    return render_template('single-post.html')
+def single(id):
+  return render_template('single-post.html')
