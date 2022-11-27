@@ -4,6 +4,11 @@ from sqlalchemy import Column, Integer, String
 # create User class that inherits Base class
 from sqlalchemy.orm import validates
 # validates function decorator SQLAlchemy
+import bcrypt
+# import bcrypt for pw hashing
+
+# before creating user:
+salt = bcrypt.gensalt()
 
 # declare several properties that parent Base class will use
 # to make the table
@@ -23,5 +28,5 @@ class User(Base):
   @validates('password')
   def validate_password(self, key, password):
     assert len(password) > 4
-
-    return password
+      # encrypt password
+    return bcrypt.hashpw(password.encode('utf-8'), salt)
