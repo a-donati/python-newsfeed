@@ -14,6 +14,3 @@ class Comment(Base):
   updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 # query for comment returns info about its author
   user = relationship('User')
-#   query for Post returns comments associated with it
-  comments = relationship('Comment', cascade='all,delete')
-#   ON DELETE CASCADE - delete corresponding foreign key records when record is deleted - deleting a post will delete associated comments
