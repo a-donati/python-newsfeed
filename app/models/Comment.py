@@ -1,0 +1,19 @@
+from datetime import datetime
+# import Python built in module datetime
+from app.db import Base
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy.orm import relationship
+
+class Comment(Base):
+  __tablename__ = 'comments'
+  id = Column(Integer, primary_key=True)
+  comment_text = Column(String(255), nullable=False)
+  user_id = Column(Integer, ForeignKey('users.id'))
+  post_id = Column(Integer, ForeignKey('posts.id'))
+  created_at = Column(DateTime, default=datetime.now)
+  updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+# query for comment returns info about its author
+  user = relationship('User')
+#   query for Post returns comments associated with it
+  comments = relationship('Comment', cascade='all,delete')
+#   ON DELETE CASCADE - delete corresponding foreign key records when record is deleted - deleting a post will delete associated comments
