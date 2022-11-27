@@ -14,3 +14,4 @@ class Post(Base):
 #   use built in Python datetime module to generate timestamps
   created_at = Column(DateTime, default=datetime.now)
   updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+  user = relationship('User')
