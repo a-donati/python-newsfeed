@@ -19,9 +19,17 @@ Base = declarative_base()
 def init_db():
   Base.metadata.create_all(engine)
 # return new session connection object - other modules can import the session from db
+  app.teardown_appcontext(close_db)
+# run app.teardown when context is destroyed
 def get_db():
   if 'db' not in g:
     # store db connection in app context
     g.db = Session()
     # return current connection object from g instead of creating new session
   return g.db
+# close connection
+def close_db(e=None):
+  db = g.pop('db', None)
+
+  if db is not None:
+    db.close()
