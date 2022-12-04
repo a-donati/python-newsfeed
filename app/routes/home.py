@@ -25,9 +25,10 @@ def login():
 def single(id):
   # get single post by id
   db = get_db()
+  # filter post by id
   post = db.query(Post).filter(Post.id == id).one()
 
-  # render single post template
+  # render single post to template
   return render_template(
     'single-post.html',
     post=post

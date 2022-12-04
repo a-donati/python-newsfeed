@@ -18,8 +18,9 @@ Base = declarative_base()
 # call init_db when flask app ready 
 def init_db():
   Base.metadata.create_all(engine)
-# return new session connection object - other modules can import the session from db
+
   app.teardown_appcontext(close_db)
+  # return new session connection object - other modules can import the session from db
 # run app.teardown when context is destroyed
 def get_db():
   if 'db' not in g:
