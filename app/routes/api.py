@@ -25,7 +25,9 @@ def signup():
   except:
     # insert failed, so send error to front end
     print(sys.exe_info()[0])
-    return jsonify(message = 'Signup failed'), 500
-    
+    # insert failed, so rollback and send error to front end
+  db.rollback()
+  return jsonify(message = 'Signup failed'), 500
+
 # An AssertionError is thrown when our custom validations fail. An IntegrityError is thrown when something specific to MySQL (like a UNIQUE constraint) fails.
   return jsonify(id = newUser.id)
