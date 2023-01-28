@@ -3,6 +3,8 @@ from app.routes import home, dashboard
 # import our app routes from routes folder
 from app.db import init_db
 # import init_db func
+from app.utils import filters
+# import filter functions
 
 def create_app(test_config=None):
     # set up app config
@@ -20,4 +22,9 @@ def create_app(test_config=None):
     # initialize db
     init_db(app)
     # init_db()
+    # complete registration of filters
+    app.jinja_env.filters['format_url'] = filters.format_url
+    app.jinja_env.filters['format_date'] = filters.format_date
+    app.jinja_env.filters['format_plural'] = filters.format_plural
+
     return app
