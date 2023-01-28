@@ -16,7 +16,7 @@ Session = sessionmaker(bind=engine)
 # map models to MySQL tables
 Base = declarative_base()
 # call init_db when flask app ready 
-def init_db():
+def init_db(app):
   Base.metadata.create_all(engine)
 
   app.teardown_appcontext(close_db)
@@ -34,3 +34,6 @@ def close_db(e=None):
 
   if db is not None:
     db.close()
+# return new session connection object
+def get_db():
+  return Session()

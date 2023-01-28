@@ -18,6 +18,6 @@ def create_app(test_config=None):
     app.register_blueprint(home)
     app.register_blueprint(dashboard)
     # initialize db
-    # init_db(app)
-
+    init_db(app)
+    # init_db()
     return app
