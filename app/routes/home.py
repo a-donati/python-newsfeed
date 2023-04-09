@@ -25,6 +25,7 @@ def login():
     return render_template('login.html')
 
   return redirect('/dashboard')
+  
 
 @bp.route('/post/<id>')
 def single(id):

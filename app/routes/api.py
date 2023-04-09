@@ -35,3 +35,28 @@ def signup():
 
   return jsonify(id = newUser.id)
 # An AssertionError is thrown when our custom validations fail. An IntegrityError is thrown when something specific to MySQL (like a UNIQUE constraint) fails.
+@bp.route('/users/logout', methods=['POST'])
+def logout():
+  # remove session variables
+  session.clear()
+  return '', 204
+
+@bp.route('/users/login', methods=['POST'])
+def login():
+  data = request.get_json()
+  db = get_db()
+
+  try:
+    user = db.query(User).filter(User.email == data['email']).one()
+  except:
+    print(sys.exc_info()[0])
+    # data['password'] becomes the second parameter in the verify_password() method of the class, because the first parameter is reserved for self
+  if user.verify_password(data['password']) == False:
+    return jsonify(message = 'Incorrect credentials'), 400
+    # return message of incorrect credentials with 400 err
+  session.clear()
+  # send back valid response 
+  session['user_id'] = user.id
+  session['loggedIn'] = True
+
+  return jsonify(id = user.id)
