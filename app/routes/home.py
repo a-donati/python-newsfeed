@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, session, redirect
 # # import Blueprint and render_template from flask
 bp = Blueprint('home', __name__, url_prefix='/')
 # # consolidate single routes to bp object
@@ -14,12 +14,18 @@ def index():
 # return homepage template along with post data
   return render_template(
   'homepage.html',
-  posts=posts
+  posts=posts,
+  loggedIn=session.get('loggedIn')
 )
 
 @bp.route('/login')
 def login():
-  return render_template('login.html')
+  # not logged in yet
+  if session.get('loggedIn') is None:
+    return render_template('login.html')
+
+  return redirect('/dashboard')
+  
 
 @bp.route('/post/<id>')
 def single(id):
@@ -31,5 +37,6 @@ def single(id):
   # render single post to template
   return render_template(
     'single-post.html',
-    post=post
+    post=post,
+    loggedIn=session.get('loggedIn')
   )
